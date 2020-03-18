@@ -17,8 +17,8 @@
 
 import java.text.SimpleDateFormat
 
-def devTypeVer() {"3.3.0"}
-def versionDate() {"8-10-2018"}
+def devTypeVer() {"3.3.1"}
+def versionDate() {"3-18-2020"}
 
 metadata {
     definition (name: "Efergy Engage Elite", namespace: "tonesto7", author: "Anthony S.") {

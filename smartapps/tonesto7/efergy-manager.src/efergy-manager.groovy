@@ -43,10 +43,14 @@ definition(
 	Add offline Hub handling to verify that the hub is online instead of generating errors.
 */
 
-def appVer() { "3.3.0" }
-def appVerDate() { "8-10-2018" }
+def appVer() { "3.3.1" }
+def appVerDate() { "3-18-2020" }
 def appVerInfo() {
 	def str = ""
+	str += "V3.3.1 (March 18th, 2020):"
+	str += "\n▔▔▔▔▔▔▔▔▔▔▔"
+	str += "\n • Fixed: Removed getTariff call as this no longer available in the API"
+
 	str += "V3.3.0 (August 10th, 2018):"
 	str += "\n▔▔▔▔▔▔▔▔▔▔▔"
 	str += "\n • Added: Pushover Manager Integration"
@@ -1126,17 +1130,17 @@ private getEnergyData() {
 	try {
 		def data = [:]
 		atomicState?.energyInfoData = [:]
-		def tariffData = getEfergyData("https://engage.efergy.com", "/mobile_proxy/getTariff")
-		def tdata = [:]
-		if(tariffData[0]) {
-			tdata["tariffUtility"] = tariffData?.tariff?.plan[0].utility[0] ?: null
-			tdata["tariffName"] = tariffData?.tariff?.plan[0].name[0] ?: null
-			tdata["tariffRate"] = tariffData?.tariff?.plan[0]?.plan[0]?.planDetail[0]?.rate[0] ?: null
-			LogAction("TariffData: ${tdata}", "debug", false)
-			data["tariffData"] = tdata
-		}
-		def tRate = tdata["tariffRate"].toDouble() ?: 0.0
-		if(tRate instanceof Double && tRate > 0) { tRate = (tRate/100) }
+		// def tariffData = getEfergyData("https://engage.efergy.com", "/mobile_proxy/getTariff")
+		// def tdata = [:]
+		// if(tariffData[0]) {
+		// 	tdata["tariffUtility"] = tariffData?.tariff?.plan[0].utility[0] ?: null
+		// 	tdata["tariffName"] = tariffData?.tariff?.plan[0].name[0] ?: null
+		// 	tdata["tariffRate"] = tariffData?.tariff?.plan[0]?.plan[0]?.planDetail[0]?.rate[0] ?: null
+		// 	LogAction("TariffData: ${tdata}", "debug", false)
+		// 	data["tariffData"] = tdata
+		// }
+		// def tRate = tdata["tariffRate"].toDouble() ?: 0.0
+		// if(tRate instanceof Double && tRate > 0) { tRate = (tRate/100) }
 		def todayUsage = getEfergyData("https://engage.efergy.com", "/mobile_proxy/getEnergy", ["period":"day"])
 		def todayCost = getEfergyData("https://engage.efergy.com", "/mobile_proxy/getForecast", ["period":"day", "dataType":"cost"])
 		def weekUsage = getEfergyData("https://engage.efergy.com", "/mobile_proxy/getEnergy", ["period":"week"])

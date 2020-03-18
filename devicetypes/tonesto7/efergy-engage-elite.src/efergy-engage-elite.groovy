@@ -86,11 +86,11 @@ metadata {
             state "default", label: '${currentValue}'
         }
 
-        valueTile("tariffRate", "device.tariffRate", width: 3, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label: 'Tariff Rate:\n${currentValue}/kWH'
-        }
-        valueTile("tariffRate_str", "device.tariffRate_str", width: 3, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label: '${currentValue}'
+        // valueTile("tariffRate", "device.tariffRate", width: 3, height: 1, decoration: "flat", wordWrap: true) {
+        //     state "default", label: 'Tariff Rate:\n${currentValue}/kWH'
+        // }
+        // valueTile("tariffRate_str", "device.tariffRate_str", width: 3, height: 1, decoration: "flat", wordWrap: true) {
+        //     state "default", label: '${currentValue}'
         }
         valueTile("hubStatus", "device.hubStatus", width: 2, height: 1, decoration: "flat", wordWrap: true) {
             state "default", label: 'Hub Status:\n${currentValue}'
@@ -122,7 +122,7 @@ metadata {
         htmlTile(name:"graphHTML", action: "getGraphHTML", width: 6, height: 10, whitelist: ["www.gstatic.com", "raw.githubusercontent.com", "cdn.rawgit.com"])
 
         main (["powerMulti"])
-        details(["powerMulti", "todayUsage_str", "monthUsage_str", "monthEst_str", "budgetPercentage_str", "tariffRate_str", "readingUpdated_str", "pwrMin", "pwrAvg", "pwrMax", "graphHTML", "refresh"])
+        details(["powerMulti", "todayUsage_str", "monthUsage_str", "monthEst_str", "budgetPercentage_str", "readingUpdated_str", "pwrMin", "pwrAvg", "pwrMax", "graphHTML", "refresh"])
     }
 }
 
@@ -544,7 +544,7 @@ def updateAttributes(rData, uData, tData, hData) {
     def curDolSym = state?.currency?.dollar.toString()
     def curCentSym = state?.currency?.cent.toString()
     def currentEnergy = uData?.todayUsage
-    def tariffRate = tData.tariffRate.isNumber() ? (tData.tariffRate.toDouble()/100) : 0.0
+    // def tariffRate = tData.tariffRate.isNumber() ? (tData.tariffRate.toDouble()/100) : 0.0
     logWriter("--------------UPDATE READING DATA-------------")
     logWriter("energy: ${currentEnergy} kWh")
     logWriter("power: ${rData?.powerReading}W")
@@ -600,11 +600,11 @@ def updateAttributes(rData, uData, tData, hData) {
     logWriter("")
 
     //Tariff Info
-    logWriter("--------------UPDATE TARIFF DATA-------------")
-    logWriter("tariff rate: ${tariffRate}${curCentSym}")
-    logWriter("")
-    sendEvent(name: "tariffRate", value: tariffRate, unit: curCentSym, description: "Tariff Rate is ${tariffRate}${curCentSym}/kWh", display: false, displayed: false)
-    sendEvent(name: "tariffRate_str", value: "Tariff Rate:\n${tariffRate}${curCentSym}/kWh", description: "Tariff Rate is ${tariffRate}${curCentSym}/kWh", display: false, displayed: false)
+    // logWriter("--------------UPDATE TARIFF DATA-------------")
+    // logWriter("tariff rate: ${tariffRate}${curCentSym}")
+    // logWriter("")
+    // sendEvent(name: "tariffRate", value: tariffRate, unit: curCentSym, description: "Tariff Rate is ${tariffRate}${curCentSym}/kWh", display: false, displayed: false)
+    // sendEvent(name: "tariffRate_str", value: "Tariff Rate:\n${tariffRate}${curCentSym}/kWh", description: "Tariff Rate is ${tariffRate}${curCentSym}/kWh", display: false, displayed: false)
 
     //Updates Hub INFO Tiles
     logWriter("--------------UPDATE HUB DATA-------------")
